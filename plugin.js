@@ -285,6 +285,15 @@ tinymce.PluginManager.add('dropzone', function(editor, url) {
             dropzoneConfig.success = function(file) {\
               if (file.xhr.response) {\
                 let response = JSON.parse(file.xhr.response);\
+                if (!response.name) {\
+                  response = {\
+                    \'url\': response.url,\
+                    \'name\': file.name,\
+                    \'type\': file.type,\
+                    \'size\': file.size,\
+                    \'thumbnail\': \'/assets/img/logo.png\'\
+                  };\
+                }\
                 if (response.thumbnail) {\
                   setTimeout(() => {this.emit("thumbnail", file, response.thumbnail);});\
                 }\
